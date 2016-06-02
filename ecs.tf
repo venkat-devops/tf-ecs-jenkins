@@ -2,7 +2,6 @@
  * Launch configuration used by autoscaling group
  */
 resource "aws_launch_configuration" "ecs" {
-  name                 = "ecs"
   image_id             = "${lookup(var.amis, var.region)}"
   /* @todo - split out to a variable */
   instance_type        = "${var.instance_type}"
@@ -11,6 +10,8 @@ resource "aws_launch_configuration" "ecs" {
   security_groups      = ["${aws_security_group.ecs.id}"]
   iam_instance_profile = "${aws_iam_instance_profile.ecs.name}"
   user_data            = "#!/bin/bash\necho ECS_CLUSTER=${aws_ecs_cluster.default.name} > /etc/ecs/ecs.config"
+
+  lifecycle { create_before_destroy = true }
 }
 
 /**
