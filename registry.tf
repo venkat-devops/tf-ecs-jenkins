@@ -3,7 +3,7 @@ resource "aws_ecr_repository" "registry" {
   name = "registry"
 }
 
-resource "aws_ecr_repository_policy" "registry_policy" {
+resource "aws_ecr_repository_policy" "erc_policy" {
   repository = "${aws_ecr_repository.registry.name}"
   policy     = "${template_file.ecr_policy.rendered}"
 }
