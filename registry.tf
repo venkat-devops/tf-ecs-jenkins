@@ -4,6 +4,7 @@ resource "aws_s3_bucket" "registry" {
 
   tags {
     Name = "Docker Registry"
+    ManagedBy = "Terraform"
   }
 }
 
@@ -40,12 +41,13 @@ resource "aws_elb" "s3-registry-elb" {
 
   tags {
     Name = "s3-registry-elb"
+    ManagedBy = "Terraform"
   }
 }
 
 /* container and task definitions for running the actual Docker registry */
-resource "aws_ecs_service" "s3-registry-elb" {
-  name            = "s3-registry-elb"
+resource "aws_ecs_service" "s3-registry-ecs" {
+  name            = "s3-registry-ecs"
   cluster         = "${aws_ecs_cluster.default.id}"
   task_definition = "${aws_ecs_task_definition.registry.arn}"
   desired_count   = 1

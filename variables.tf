@@ -1,11 +1,3 @@
-variable "aws_access_key" {
-  description = "The AWS access key."
-}
-
-variable "aws_secret_key" {
-  description = "The AWS secret key."
-}
-
 variable "region" {
   description = "The AWS region to create resources in."
   default = "eu-west-1"
@@ -24,6 +16,10 @@ variable "ecs_cluster_name" {
 variable "s3_bucket_name" {
   description = "The name of the s3 bucket to store the registry data in."
   default = "s3-ecs-docker-registry.example.com"
+}
+
+variable "ssh_key_name" {
+  description = "Existing ec2 SSH key to launch instances with."
 }
 
 variable "registry_username" {

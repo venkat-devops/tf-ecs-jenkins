@@ -21,5 +21,6 @@ resource "aws_security_group" "ecs" {
 
   tags {
     Name = "ecs-sg"
+    ManagedBy = "Terraform"
   }
 }
