@@ -3,6 +3,8 @@ variable "region" {
   default = "eu-west-1"
 }
 
+variable "aws_account_id" {}
+
 variable "availability_zones" {
   description = "The availability zones"
   default = "eu-west-1a,eu-west-1b,eu-west-1c"
