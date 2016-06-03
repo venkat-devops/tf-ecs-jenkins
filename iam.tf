@@ -18,6 +18,13 @@ resource "aws_iam_role_policy" "ecs_instance_role_policy" {
   role     = "${aws_iam_role.ecs_role.id}"
 }
 
+resource "aws_iam_policy_attachment" "ecr-policy-attach" {
+  name       = "ecr-policy-attach"
+  roles      = ["${aws_iam_role.ecs_role.id}"]
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+}
+
+
 /**
  * IAM profile to be used in auto-scaling launch configuration.
  */

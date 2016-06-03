@@ -12,7 +12,8 @@
         "ecs:StartTelemetrySession",
         "ecs:Submit*",
         "ecs:StartTask",
-        "ecr:GetAuthorizationToken"
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
       ],
       "Resource": "*"
     }
