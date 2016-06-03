@@ -4,22 +4,23 @@ resource "aws_iam_role" "ecs_role" {
   assume_role_policy = "${file("policies/ecs-role.json")}"
 }
 
-/* ecs service scheduler role */
-resource "aws_iam_role_policy" "ecs_service_role_policy" {
-  name     = "ecs_service_role_policy"
-  policy   = "${file("policies/ecs-service-role-policy.json")}"
-  role     = "${aws_iam_role.ecs_role.id}"
+/* ecs service scheduler role (register/deregister ELBs, view ec2)*/
+resource "aws_iam_policy_attachment" "ecs-service-policy-attach" {
+  name       = "ecs-service-policy"
+  roles      = ["${aws_iam_role.ecs_role.id}"]
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceRole"
 }
 
-/* ec2 container instance role & policy */
-resource "aws_iam_role_policy" "ecs_instance_role_policy" {
-  name     = "ecs_instance_role_policy"
-  policy   = "${file("policies/ecs-instance-role-policy.json")}"
-  role     = "${aws_iam_role.ecs_role.id}"
+/* ecs container instance role (ecs commands & AWS logging service)*/
+resource "aws_iam_policy_attachment" "ecs-ec2-policy-attach" {
+  name       = "ecs-ec2-policy"
+  roles      = ["${aws_iam_role.ecs_role.id}"]
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role"
 }
 
+/* ecr access (read from ECR repository)*/
 resource "aws_iam_policy_attachment" "ecr-policy-attach" {
-  name       = "ecr-policy-attach"
+  name       = "ecr-policy"
   roles      = ["${aws_iam_role.ecs_role.id}"]
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
 }
