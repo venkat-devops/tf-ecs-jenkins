@@ -1,0 +1,51 @@
+[
+    {
+        "name": "jenkins-master",
+        "image": "jenkins:2.3-alpine",
+        "cpu": 200,
+        "memory": 400,
+        "links": null,
+        "portMappings": [
+            {
+                "containerPort": 8080,
+                "hostPort": 8080,
+                "protocol": "tcp"
+            }
+        ],
+        "essential": true,
+        "entryPoint": null,
+        "command": null,
+        "environment": [],
+        "mountPoints": [
+            {
+              "ContainerPath": "/var/jenkins_home",
+              "SourceVolume": "jenkins_home",
+              "ReadOnly": false
+            }, {
+              "ContainerPath": "/var/run/docker.sock",
+              "SourceVolume": "docker_sock",
+              "ReadOnly": false
+            }
+        ],
+        "volumesFrom": [],
+        "hostname": null,
+        "user": null,
+        "workingDirectory": null,
+        "disableNetworking": null,
+        "privileged": null,
+        "readonlyRootFilesystem": null,
+        "dnsServers": null,
+        "dnsSearchDomains": null,
+        "extraHosts": null,
+        "dockerSecurityOptions": null,
+        "dockerLabels": null,
+        "ulimits": null,
+        "logConfiguration": {
+            "logDriver": "awslogs",
+            "options": {
+                "awslogs-group": "${log_group}",
+                "awslogs-region": "${aws_region}"
+            }
+        }
+    }
+]

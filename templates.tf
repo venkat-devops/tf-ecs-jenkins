@@ -7,13 +7,22 @@ resource "template_file" "ecr_policy" {
   }
 }
 
+resource "template_file" "jenkins_task" {
+  template = "${file("container_definitions/jenkins_task.json")}"
+
+  vars {
+    aws_region = "${var.region}"
+    log_group  = "${aws_cloudwatch_log_group.tf_logs.name}"
+  }
+}
+
 resource "template_file" "web_task" {
   template = "${file("container_definitions/web_task.json")}"
 
   vars {
     /* These must include the quotes when set */
-    entrypoint     = "null"
-    command        = "null"
+    entrypoint = "null"
+    command    = "null"
 
     aws_region     = "${var.region}"
     container_name = "${var.web_server_container_name}"
@@ -24,7 +33,7 @@ resource "template_file" "web_task" {
     db_port        = "${aws_db_instance.webapp_db.port}"
     log_group      = "${aws_cloudwatch_log_group.tf_logs.name}"
     memory         = 300
-    webapp_image   = "${var.webapp_image}"
+    webapp_image   = "${aws_ecr_repository.webapp.repository_url}"
     webapp_name    = "${var.webapp_name}"
     webapp_tag     = "${var.webapp_tag}"
   }
@@ -35,7 +44,7 @@ resource "template_file" "web_db_bootstrap" {
 
   vars {
     /* A shell command, passed to sh -c */
-    command        = "/home/docker/code/app/manage.py migrate && /home/docker/code/app/manage.py loaddata users.json cms.data.json qfr.json locations.json"
+    command = "/home/docker/code/app/manage.py migrate && /home/docker/code/app/manage.py loaddata users.json cms.data.json qfr.json locations.json"
 
     aws_region     = "${var.region}"
     container_name = "web_task"
@@ -46,7 +55,7 @@ resource "template_file" "web_db_bootstrap" {
     db_port        = "${aws_db_instance.webapp_db.port}"
     log_group      = "${aws_cloudwatch_log_group.tf_logs.name}"
     memory         = 300
-    webapp_image   = "${var.webapp_image}"
+    webapp_image   = "${aws_ecr_repository.webapp.repository_url}"
     webapp_name    = "${var.webapp_name}"
     webapp_tag     = "${var.webapp_tag}"
   }

@@ -10,6 +10,11 @@ variable "availability_zones" {
   default     = "eu-west-1a,eu-west-1b,eu-west-1c"
 }
 
+variable "dns_root" {
+  description = "The domain or subdomain to create names in"
+  default     = "aws.example.com"
+}
+
 variable "ecs_cluster_name" {
   description = "The name of the Amazon ECS cluster."
   default     = "default"
@@ -43,10 +48,6 @@ variable "key_name" {
 variable "key_file" {
   description = "The ssh public key for using with the cloud provider."
   default     = ""
-}
-
-variable "webapp_image" {
-  description = "Docker image for the web app"
 }
 
 variable "webapp_tag" {
