@@ -1,7 +1,7 @@
 [
     {
         "name": "${container_name}",
-        "image": "${webapp_image}:${webapp_tag}",
+        "image": "${aws_account_id}.dkr.ecr.${aws_region}.amazonaws.com/${webapp_name}:${webapp_tag}",
         "cpu": ${cpu},
         "memory": ${memory},
         "links": null,
