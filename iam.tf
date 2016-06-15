@@ -18,19 +18,25 @@ resource "aws_iam_policy_attachment" "ecs-ec2-policy-attach" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role"
 }
 
-/* ecr access (read from ECR repository)*/
+/* ecr access (read and upload to ECR repository)*/
 resource "aws_iam_policy_attachment" "ecr-policy-attach" {
   name       = "ecr-policy"
   roles      = ["${aws_iam_role.ecs_role.id}"]
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryPowerUser"
 }
 
+/* s3 readonly - load jenkins save */
+resource "aws_iam_policy_attachment" "s3-policy-attach" {
+  name       = "s3-policy"
+  roles      = ["${aws_iam_role.ecs_role.id}"]
+  policy_arn = "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess"
+}
 
 /**
  * IAM profile to be used in auto-scaling launch configuration.
  */
 resource "aws_iam_instance_profile" "ecs" {
-  name = "ecs-instance-profile"
-  path = "/"
+  name  = "ecs-instance-profile"
+  path  = "/"
   roles = ["${aws_iam_role.ecs_role.name}"]
 }

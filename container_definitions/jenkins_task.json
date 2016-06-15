@@ -2,8 +2,8 @@
     {
         "name": "jenkins-master",
         "image": "jenkins:2.3-alpine",
-        "cpu": 200,
-        "memory": 400,
+        "cpu": 600,
+        "memory": 500,
         "links": null,
         "portMappings": [
             {

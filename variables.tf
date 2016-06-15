@@ -50,13 +50,17 @@ variable "key_file" {
   default     = ""
 }
 
+variable "s3_jenkins_backup" {
+  description = "bucket/path to use to populate jenkins_home"
+}
+
 variable "webapp_tag" {
   description = "Docker tag on the image (default 'latest')"
   default     = "latest"
 }
 
 variable "webapp_name" {
-  default     = "webapp"
+  default = "webapp"
 }
 
 variable "webapp_db_user" {
@@ -65,7 +69,7 @@ variable "webapp_db_user" {
 }
 
 variable "webapp_db_password" {
-  default     = "Chang3Th1s"
+  default = "Chang3Th1s"
 }
 
 variable "webapp_db_engine" {
@@ -86,5 +90,5 @@ variable "webapp_db_size" {
 }
 
 variable "web_server_container_name" {
-    default = "web_server"
+  default = "web_server"
 }
