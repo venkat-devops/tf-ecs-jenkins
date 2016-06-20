@@ -4,4 +4,8 @@ resource "aws_route53_zone" "primary" {
   tags {
     ManagedBy = "Terraform"
   }
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
