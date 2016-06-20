@@ -56,7 +56,7 @@ resource "aws_ecs_service" "web_server" {
   name = "web_server"
   cluster = "${aws_ecs_cluster.default.id}"
   task_definition = "${aws_ecs_task_definition.web.arn}"
-  desired_count = 1
+  desired_count = 0  /* start with 0, then turn up after DB migration */
   iam_role = "${aws_iam_role.ecs_role.arn}"
   depends_on = ["aws_iam_policy_attachment.ecs-service-policy-attach"]
 

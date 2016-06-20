@@ -64,13 +64,13 @@ resource "template_file" "web_db_bootstrap" {
     aws_account_id = "${var.aws_account_id}"
     aws_region     = "${var.region}"
     container_name = "web_task"
-    cpu            = 100
+    cpu            = 200
     db_host        = "${aws_db_instance.webapp_db.address}"
     db_name        = "${aws_db_instance.webapp_db.name}"
     db_password    = "${var.webapp_db_password}"
     db_port        = "${aws_db_instance.webapp_db.port}"
     log_group      = "${aws_cloudwatch_log_group.tf_logs.name}"
-    memory         = 100
+    memory         = 300
     webapp_image   = "${aws_ecr_repository.webapp.repository_url}"
     webapp_name    = "${var.webapp_name}"
     webapp_tag     = "${var.webapp_tag}"
