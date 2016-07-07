@@ -28,7 +28,7 @@ variable "ssh_key_name" {
   description = "Existing ec2 SSH key to launch instances with."
 }
 
-/* ECS optimized AMIs per region */
+/* ECS optimized AMIs per region - TODO, find the updated IDs for other regions */
 variable "amis" {
   default = {
     ap-northeast-1 = "ami-8aa61c8a"
@@ -44,8 +44,9 @@ variable "instance_type" {
   default = "t2.micro"
 }
 
+/* TODO: go back to creating a key */
 variable "key_name" {
-  description = "The aws ssh key name."
+  description = "The name of an aws ssh key that already exists."
   default     = ""
 }
 
@@ -54,6 +55,12 @@ variable "key_file" {
   default     = ""
 }
 
+/* TODO: This should go away, or be optional. */
 variable "s3_jenkins_backup" {
   description = "bucket/path to use to populate jenkins_home"
+}
+
+variable "webapp_names" {
+  description = "comma delimited list of the ECR repos to create"
+  default     = "webapp"
 }
