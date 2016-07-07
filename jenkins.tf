@@ -4,7 +4,7 @@ resource "aws_ecs_task_definition" "jenkins" {
 
   volume {
     name      = "jenkins_home"
-    host_path = "/ecs/jenkins_home"
+    host_path = "/var/jenkins_home"
   }
 
   volume {
@@ -65,7 +65,7 @@ resource "aws_ecs_service" "jenkins_server" {
 
 /* Nice name */
 resource "aws_route53_record" "jenkins" {
-  zone_id = "${aws_route53_zone.primary.zone_id}"
+  zone_id = "${var.dns_zone_id}"
   name    = "jenkins.${var.dns_root}"
   type    = "CNAME"
   ttl     = "300"
