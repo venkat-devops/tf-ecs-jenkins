@@ -1,5 +1,6 @@
 /* Registry ECR - only works in some Zones */
 resource "aws_ecr_repository" "webapps" {
+  /* real lists are coming in 0.7 */
   count = "${length(split(",", var.webapp_names))}"
   name  = "${trimspace(element(split(",", var.webapp_names), count.index))}"
 }
