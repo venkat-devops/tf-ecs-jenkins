@@ -4,8 +4,11 @@ resource "template_file" "ecs_user_data" {
 
   vars {
     /* Avoid loop by using var not ${aws_ecs_cluster.default.name} */
-    cluster_name      = "${var.ecs_cluster_name}"
-    s3_jenkins_backup = "${var.s3_jenkins_backup}"
+    cluster_name = "${var.ecs_cluster_name}"
+    s3_plugin_bucket    = "${aws_s3_bucket.jenkins-plugins.bucket}"
+    /* Set to "" to avoid pulling in a backup */
+    /* s3_backup_bucket    = "${var.s3_jenkins_backup}" */
+    s3_backup_bucket    = ""
   }
 
   lifecycle {

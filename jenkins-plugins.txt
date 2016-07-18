@@ -1,0 +1,8 @@
+amazon-ecr
+aws-credentials
+docker-workflow
+github
+github-organization-folder
+junit
+rebuild
+workflow-aggregator

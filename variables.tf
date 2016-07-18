@@ -60,6 +60,10 @@ variable "s3_jenkins_backup" {
   description = "bucket/path to use to populate jenkins_home"
 }
 
+variable "s3_bucket_base_key" {
+  description = "namespace like aws.example.com to prevent bucket name collisions. Specific keys will be prepended"
+}
+
 variable "webapp_names" {
   description = "comma delimited list of the ECR repos to create"
   default     = "webapp"
