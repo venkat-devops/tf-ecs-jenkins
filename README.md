@@ -30,3 +30,8 @@ terraform apply
 ```
 
 For a full list of overridable variables see ```variables.tf```
+
+### Jenkins backup
+
+You can preserve your Jenkins settings by copying your /var/jenkins_home to the s3 bucket path defined by the variable s3_jenkins_backup
+eg: aws s3 sync /var/jenkins_home/ $s3_jenkins_backup
