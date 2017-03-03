@@ -1,0 +1,15 @@
+availability_zones = "us-east-1b,us-east-1c,us-east-1d"
+
+aws_account_id = ""
+
+dns_root = "aws.example.com"
+
+dns_zone_id = ""
+
+region = "us-east-1"
+
+s3_bucket_base_key = ""
+
+s3_jenkins_backup = ""
+
+ssh_key_name = ""
