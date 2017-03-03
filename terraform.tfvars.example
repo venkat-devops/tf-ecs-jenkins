@@ -1,4 +1,4 @@
-availability_zones = "us-east-1b,us-east-1c,us-east-1d"
+availability_zones = ["us-east-1b", "us-east-1c", "us-east-1d"]
 
 aws_account_id = ""
 
@@ -13,3 +13,5 @@ s3_bucket_base_key = ""
 s3_jenkins_backup = ""
 
 ssh_key_name = ""
+
+stack_prefix = "terraform"

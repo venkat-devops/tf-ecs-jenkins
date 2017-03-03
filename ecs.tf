@@ -23,8 +23,8 @@ resource "aws_launch_configuration" "ecs" {
  * Autoscaling group.
  */
 resource "aws_autoscaling_group" "ecs" {
-  name                 = "ecs-asg"
-  availability_zones   = ["${split(",", var.availability_zones)}"]
+  name                 = "${var.stack_prefix}-ecs-asg"
+  availability_zones   = ["${var.availability_zones}"]
   launch_configuration = "${aws_launch_configuration.ecs.name}"
 
   /* @todo - variablize */
@@ -41,5 +41,5 @@ resource "aws_autoscaling_group" "ecs" {
 
 /* ecs service cluster */
 resource "aws_ecs_cluster" "default" {
-  name = "${var.ecs_cluster_name}"
+  name = "${var.stack_prefix}-${var.ecs_cluster_name}"
 }

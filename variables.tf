@@ -3,11 +3,17 @@ variable "region" {
   default     = "us-east-1"
 }
 
+variable "aws_profile" {
+  description = "Profile to use from ~/.aws/credentials"
+  default     = "default"
+}
+
 variable "aws_account_id" {}
 
 variable "availability_zones" {
   description = "The availability zones"
-  default     = "us-east-1b,us-east-1c,us-east-1d"
+  default     = ["us-east-1b", "us-east-1c", "us-east-1d"]
+  type        = "list"
 }
 
 variable "dns_root" {
@@ -28,15 +34,21 @@ variable "ssh_key_name" {
   description = "Existing ec2 SSH key to launch instances with."
 }
 
-/* ECS optimized AMIs per region - TODO, find the updated IDs for other regions */
+/* 2016.09.f per http://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-optimized_AMI.html */
+/* ECS optimized AMIs per region */
 variable "amis" {
   default = {
-    ap-northeast-1 = "ami-8aa61c8a"
-    ap-southeast-2 = "ami-5ddc9f67"
-    eu-west-1      = "ami-2aaef35d"
-    us-east-1      = "ami-8f7687e2" /* Updated to 2016.03c */
-    us-west-1      = "ami-5721df13"
-    us-west-2      = "ami-cb584dfb"
+    us-east-1      = "ami-b2df2ca4"
+    us-east-2      = "ami-832b0ee6"
+    us-west-1      = "ami-dd104dbd"
+    us-west-2      = "ami-022b9262"
+    eu-west-1      = "ami-a7f2acc1"
+    eu-west-2      = "ami-3fb6bc5b"
+    eu-central-1   = "ami-ec2be583"
+    ap-northeast-1 = "ami-c393d6a4"
+    ap-southeast-1 = "ami-a88530cb"
+    ap-southeast-2 = "ami-8af8ffe9"
+    ca-central-1   = "ami-ead5688e"
   }
 }
 
@@ -66,5 +78,10 @@ variable "s3_bucket_base_key" {
 
 variable "webapp_names" {
   description = "comma delimited list of the ECR repos to create"
-  default     = "webapp"
+  default     = ["webapp"]
+  type        = "list"
+}
+
+variable "stack_prefix" {
+  description = "This prefix will be attached to all named resources to prevent collision"
 }

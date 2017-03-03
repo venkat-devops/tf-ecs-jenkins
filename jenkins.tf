@@ -31,8 +31,8 @@ resource "aws_s3_bucket" "jenkins-plugins" {
 
 /* ELB for web service */
 resource "aws_elb" "jenkins" {
-  name               = "jenkins-terraform-elb"
-  availability_zones = ["us-east-1b", "us-east-1c", "us-east-1d"]
+  name               = "${var.stack_prefix}-jenkins-terraform-elb"
+  availability_zones = ["${var.availability_zones}"]
 
   listener {
     instance_port     = 8080
@@ -55,14 +55,14 @@ resource "aws_elb" "jenkins" {
   connection_draining_timeout = 400
 
   tags {
-    Name      = "jenkins-terraform-elb"
+    Name      = "${var.stack_prefix}-jenkins-terraform-elb"
     ManagedBy = "Terraform"
   }
 }
 
 /* jenkins server service */
 resource "aws_ecs_service" "jenkins_server" {
-  name            = "jenkins_server"
+  name            = "${var.stack_prefix}_jenkins_server"
   cluster         = "${aws_ecs_cluster.default.id}"
   task_definition = "${aws_ecs_task_definition.jenkins.arn}"
   desired_count   = 1
@@ -82,7 +82,7 @@ resource "aws_ecs_service" "jenkins_server" {
 /* Nice name */
 resource "aws_route53_record" "jenkins" {
   zone_id = "${var.dns_zone_id}"
-  name    = "jenkins.${var.dns_root}"
+  name    = "${var.stack_prefix}-jenkins.${var.dns_root}"
   type    = "CNAME"
   ttl     = "300"
   records = ["${aws_elb.jenkins.dns_name}"]
