@@ -12,7 +12,7 @@ resource "aws_launch_configuration" "ecs" {
   iam_instance_profile = "${aws_iam_instance_profile.ecs.name}"
 
   /* Nearly time to make this even better */
-  user_data = "${template_file.ecs_user_data.rendered}"
+  user_data = "${data.template_file.ecs_user_data.rendered}"
 
   lifecycle {
     create_before_destroy = true

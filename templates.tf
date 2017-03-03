@@ -1,22 +1,20 @@
 /* template files for registry and ecs role policies */
-resource "template_file" "ecs_user_data" {
+data "template_file" "ecs_user_data" {
   template = "${file("user_data/ecs_cluster.sh")}"
 
   vars {
     /* Avoid loop by using var not ${aws_ecs_cluster.default.name} */
-    cluster_name = "${var.ecs_cluster_name}"
-    s3_plugin_bucket    = "${aws_s3_bucket.jenkins-plugins.bucket}"
-    /* Set to "" to avoid pulling in a backup */
-    /* s3_backup_bucket    = "${var.s3_jenkins_backup}" */
-    s3_backup_bucket    = ""
-  }
+    cluster_name     = "${var.ecs_cluster_name}"
+    s3_plugin_bucket = "${aws_s3_bucket.jenkins-plugins.bucket}"
 
-  lifecycle {
-    create_before_destroy = true
+    /* Set to "" to avoid pulling in a backup */
+    s3_backup_path = "${var.s3_jenkins_backup}"
+
+    /* s3_backup_path    = "" */
   }
 }
 
-resource "template_file" "ecr_policy" {
+data "template_file" "ecr_policy" {
   template = "${file("policies/ecr-policy.json")}"
 
   vars {
@@ -24,7 +22,7 @@ resource "template_file" "ecr_policy" {
   }
 }
 
-resource "template_file" "jenkins_task" {
+data "template_file" "jenkins_task" {
   template = "${file("container_definitions/jenkins_task.json")}"
 
   vars {

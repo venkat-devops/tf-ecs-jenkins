@@ -8,5 +8,5 @@ resource "aws_ecr_repository" "webapps" {
 resource "aws_ecr_repository_policy" "ecr_policy" {
   count      = "${length(split(",", var.webapp_names))}"
   repository = "${element(aws_ecr_repository.webapps.*.name, count.index)}"
-  policy     = "${template_file.ecr_policy.rendered}"
+  policy     = "${data.template_file.ecr_policy.rendered}"
 }
