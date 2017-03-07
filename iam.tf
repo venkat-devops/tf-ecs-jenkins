@@ -1,7 +1,7 @@
 /* ecs iam role and policies */
 resource "aws_iam_role" "ecs_role" {
   name               = "${var.stack_prefix}-ecs_role"
-  assume_role_policy = "${file("policies/ecs-role.json")}"
+  assume_role_policy = "${file("policies/ecs-assume-role.json")}"
 }
 
 /* ecs service scheduler role (register/deregister ELBs, view ec2)*/
@@ -39,4 +39,57 @@ resource "aws_iam_instance_profile" "ecs" {
   name  = "${var.stack_prefix}-ecs-instance-profile"
   path  = "/"
   roles = ["${aws_iam_role.ecs_role.name}"]
+}
+
+/**
+ * TODO - Is this needed. Just use the permisions from the jenkins task role
+ * IAM User for Jenkins to perform actions with
+ */
+resource "aws_iam_access_key" "jenkins" {
+  user = "${aws_iam_user.jenkins.name}"
+
+  /**
+   * TODO - use pgp to encrypt the secret
+   * pgp_key = "keybase:some_person_that_exists"
+   */
+}
+
+resource "aws_iam_user" "jenkins" {
+  name = "${var.stack_prefix}-jenkins"
+  path = "/system/"
+}
+
+resource "aws_iam_user_policy" "jenkins_policy" {
+  name = "Jenkins_deploy_policy"
+  user = "${aws_iam_user.jenkins.name}"
+
+  // Allow full access to CRUD on apigateway, labmda, and dynamoDB
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "lambda:*",
+      "Effect": "Allow",
+      "Resource": "arn:aws:lambda:*"
+    },
+    {
+      "Action": "execute-api:*",
+      "Effect": "Allow",
+      "Resource": "arn:aws:execute-api:*"
+    },
+    {
+      "Action": [
+        "dynamodb:CreateTable",
+        "dynamodb:DeleteTable",
+        "dynamodb:Describe*",
+        "dynamodb:ListTables",
+        "dynamodb:UpdateTable"
+      ],
+      "Effect": "Allow",
+      "Resource": "*"
+    }
+  ]
+}
+EOF
 }

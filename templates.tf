@@ -28,3 +28,12 @@ data "template_file" "jenkins_task" {
     log_group  = "${aws_cloudwatch_log_group.jenkins_logs.name}"
   }
 }
+
+data "template_file" "jenkins_task_role_policy" {
+  template = "${file("policies/jenkins_task_role_policy.json")}"
+
+  vars {
+    jenkins_backup_path   = "${var.s3_jenkins_backup}"
+    jenkins_backup_bucket = "${element(split("/", var.s3_jenkins_backup), 0)}"
+  }
+}

@@ -1,5 +1,6 @@
 resource "aws_ecs_task_definition" "jenkins" {
   family                = "jenkins"
+  task_role_arn         = "${aws_iam_role.jenkins_role.arn}"
   container_definitions = "${data.template_file.jenkins_task.rendered}"
 
   volume {
@@ -27,6 +28,19 @@ resource "aws_s3_bucket" "jenkins-plugins" {
     /* Download the required plugins and push to s3*/
     command = "./scripts/batch-install-jenkins-plugins.sh -p jenkins-plugins.txt -d jenkins-plugins && aws s3 cp --recursive jenkins-plugins s3://jenkins-plugins.${var.s3_bucket_base_key}"
   }
+}
+
+/* Task Role and policy */
+resource "aws_iam_role" "jenkins_role" {
+  name               = "${var.stack_prefix}_jenkins_role"
+  assume_role_policy = "${file("policies/task-assume-role.json")}"
+}
+
+resource "aws_iam_role_policy" "jenkins_policy" {
+  name = "${var.stack_prefix}-jenkins-policy"
+  role = "${aws_iam_role.jenkins_role.name}"
+
+  policy = "${data.template_file.jenkins_task_role_policy.rendered}"
 }
 
 /* ELB for web service */
