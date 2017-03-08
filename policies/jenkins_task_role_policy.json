@@ -25,6 +25,27 @@
       "Action": "cloudformation:*",
       "Effect": "Allow",
       "Resource": "*"
+    },
+    {
+      "Action": "lambda:*",
+      "Effect": "Allow",
+      "Resource": "arn:aws:lambda:*"
+    },
+    {
+      "Action": "execute-api:*",
+      "Effect": "Allow",
+      "Resource": "arn:aws:execute-api:*"
+    },
+    {
+      "Action": [
+        "dynamodb:CreateTable",
+        "dynamodb:DeleteTable",
+        "dynamodb:Describe*",
+        "dynamodb:ListTables",
+        "dynamodb:UpdateTable"
+      ],
+      "Effect": "Allow",
+      "Resource": "*"
     }
 
   ]
