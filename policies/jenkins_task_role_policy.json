@@ -22,7 +22,10 @@
       ]
     },
     {
-      "Action": "cloudformation:*",
+      "Action": [
+        "cloudformation:*",
+        "apigateway:*"
+      ],
       "Effect": "Allow",
       "Resource": "*"
     },
@@ -30,11 +33,6 @@
       "Action": "lambda:*",
       "Effect": "Allow",
       "Resource": "arn:aws:lambda:*"
-    },
-    {
-      "Action": "execute-api:*",
-      "Effect": "Allow",
-      "Resource": "arn:aws:execute-api:*"
     },
     {
       "Action": [
