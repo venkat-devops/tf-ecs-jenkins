@@ -1,7 +1,7 @@
 [
     {
         "name": "jenkins-master",
-        "image": "jenkins:2.32.3-alpine",
+        "image": "jenkins:2.60.1-alpine",
         "cpu": 600,
         "memory": 500,
         "links": null,
