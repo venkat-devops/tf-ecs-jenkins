@@ -6,7 +6,7 @@ readonly PROGNAME=$(basename $0)
 # http://stackoverflow.com/questions/1055671/how-can-i-get-the-behavior-of-gnus-readlink-f-on-a-mac
 # brew install coreutils
 # export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
-readonly PROGDIR=$(readlink -m $(dirname $0))
+readonly PROGDIR=$(greadlink -m $(dirname $0)) # swapped readlink with greadlink
 readonly ARGS="$@"
 
 #
@@ -206,7 +206,7 @@ main() {
   done
 
   # echo $PLUGIN_TEMPDIR
-  rm -rf $PLUGIN_TEMPDIR
+  #rm -rf $PLUGIN_TEMPDIR  # Commented to keep the plugins temp directory for quicker terraform reruns
 }
 
 main

@@ -1,6 +1,6 @@
-output "jenkins.dns_name" {
-  value = "${aws_elb.jenkins.dns_name}"
-}
+# output "jenkins.dns_name" {
+#   value = "${aws_elb.jenkins.dns_name}"
+# }
 
 output "dns_zone_id" {
   value = "${var.dns_zone_id}"
@@ -24,4 +24,8 @@ output "jenkins_secret" {
 
 output "jenkins_id" {
   value = "${aws_iam_access_key.jenkins.id}"
+}
+
+output "jenkins_dns" {
+  value = "${aws_route53_record.jenkins.name}"
 }

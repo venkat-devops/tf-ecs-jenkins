@@ -16,7 +16,7 @@ resource "aws_ecs_task_definition" "jenkins" {
 
 /* s3 bucket for initial plugins */
 resource "aws_s3_bucket" "jenkins-plugins" {
-  bucket = "jenkins-plugins.${var.s3_bucket_base_key}"
+  bucket = "jenkins-plugins-${var.s3_bucket_base_key}"
   acl    = "private"
 
   tags {
@@ -26,7 +26,8 @@ resource "aws_s3_bucket" "jenkins-plugins" {
 
   provisioner "local-exec" {
     /* Download the required plugins and push to s3*/
-    command = "./scripts/batch-install-jenkins-plugins.sh -p jenkins-plugins.txt -d jenkins-plugins && aws s3 cp --recursive jenkins-plugins s3://jenkins-plugins.${var.s3_bucket_base_key}"
+    # command = "./scripts/batch-install-jenkins-plugins.sh -p jenkins-plugins.txt -d jenkins-plugins && aws s3 cp --recursive jenkins-plugins s3://jenkins-plugins.${var.s3_bucket_base_key} --profile ${var.aws_profile}"
+    command = "aws s3 cp --recursive jenkins-plugins s3://jenkins-plugins-${var.s3_bucket_base_key} --profile ${var.aws_profile}"
   }
 }
 

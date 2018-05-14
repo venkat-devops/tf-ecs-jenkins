@@ -1,6 +1,6 @@
 variable "region" {
   description = "The AWS region to create resources in."
-  default     = "us-east-1"
+  default     = "eu-west-2"
 }
 
 variable "aws_profile" {
@@ -12,7 +12,7 @@ variable "aws_account_id" {}
 
 variable "availability_zones" {
   description = "The availability zones"
-  default     = ["us-east-1b", "us-east-1c", "us-east-1d"]
+  default     = ["eu-west-2a", "eu-west-2b", "eu-west-2c"]
   type        = "list"
 }
 
@@ -27,7 +27,7 @@ variable "dns_zone_id" {
 
 variable "ecs_cluster_name" {
   description = "The name of the Amazon ECS cluster."
-  default     = "default"
+  default     = "ecs"
 }
 
 variable "ssh_key_name" {
@@ -62,10 +62,10 @@ variable "key_name" {
   default     = ""
 }
 
-variable "key_file" {
-  description = "The ssh public key for using with the cloud provider."
-  default     = ""
-}
+# variable "key_file" {
+#   description = "The ssh public key for using with the cloud provider."
+#   default     = ""
+# }
 
 /* TODO: This should go away, or be optional. */
 variable "s3_jenkins_backup" {
