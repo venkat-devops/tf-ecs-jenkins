@@ -37,6 +37,12 @@ resource "aws_autoscaling_group" "ecs" {
     value               = "Terraform"
     propagate_at_launch = true
   }
+
+  tag {
+    key                 = "Name"
+    value               = "${var.ecs_cluster_name}_asg"
+    propagate_at_launch = true
+  }
 }
 
 /* ecs service cluster */
